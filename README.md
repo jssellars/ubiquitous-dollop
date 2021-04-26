@@ -18,7 +18,7 @@ There are two parts to settings up this test, the Github repository and the Shop
 
 #### For the Shopify store
 1. Create a Shopify development store. You will need to create a Shopify partner account for this if you don't already have one.
-2. Set this theme with your work as the publsihed theme for the store.
+2. Set this theme with your work as the published theme for the store.
 3. Populate the stores products by uploading the [supplied CSV file](https://github.com/lucidnz/developer-application-shopify/blob/master/dummy_product_data.csv).
 
 ### What do you need to deliver?
