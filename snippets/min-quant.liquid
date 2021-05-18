@@ -1,0 +1,8 @@
+{% assign min_quant = 0 %}
+{% for tag in product.tags %}
+    {% if tag contains "moq:" %}
+        {% assign min_quant = tag | remove: "moq:"%}
+        {% break %}
+    {% endif %}
+{% endfor %}
+{{ min_quant }}
