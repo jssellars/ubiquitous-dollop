@@ -6732,9 +6732,12 @@ theme.Cart = (function() {
         "[data-quantity-item='" + itemIndex + "']"
       );
 
+      const minOrderQuant = evt.target.getAttribute('data-quantity-minimum')
+
       var value = parseInt(input.value);
 
-      var isValidValue = !(value < 0 || isNaN(value));
+      var isValidValue = !(value < minOrderQuant || isNaN(value));
+      console.log(`is valid: ${isValidValue}`)
 
       itemQtyInputs.forEach(function(element) {
         element.value = value;
@@ -6744,7 +6747,8 @@ theme.Cart = (function() {
       this._hideQuantityErrorMessage();
 
       if (!isValidValue) {
-        this._showQuantityErrorMessages(itemElement);
+        this._showQuantityErrorMessages(itemElement, minOrderQuant);
+        evt.target.value = minOrderQuant
         return;
       }
 
@@ -7323,11 +7327,11 @@ theme.Cart = (function() {
       );
     },
 
-    _showQuantityErrorMessages: function(itemElement) {
+    _showQuantityErrorMessages: function(itemElement, min) {
       itemElement
         .querySelectorAll(selectors.cartQuantityErrorMessage)
         .forEach(function(element) {
-          element.textContent = theme.strings.quantityMinimumMessage;
+          element.textContent = theme.strings.quantityMinimumMessage.replace("1",min);
         });
 
       itemElement
@@ -8177,11 +8181,13 @@ theme.Product = (function() {
 
           this.previouslyFocusedElement = document.activeElement;
 
-          var isInvalidQuantity =
-            !!this.quantityInput && this.quantityInput.value <= 0;
+          const minOrderQuant = this.quantityInput.getAttribute('data-quantity-minimum')
+          console.log(minOrderQuant)
+
+          var isInvalidQuantity = !!this.quantityInput && this.quantityInput.value < minOrderQuant;
 
           if (isInvalidQuantity) {
-            this._showErrorMessage(theme.strings.quantityMinimumMessage);
+            this._showErrorMessage(theme.strings.quantityMinimumMessage.replace("1",minOrderQuant));
             return;
           }
 
